@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:instagram_clone/models/user.dart';
 import 'package:instagram_clone/providers/user_provider.dart';
+import 'package:instagram_clone/resources/firebase_methods.dart';
 import 'package:instagram_clone/utilis/colors.dart';
 import 'package:instagram_clone/utilis/utilis.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +20,35 @@ class _AddPostScreenState extends State<AddPostScreen> {
   Uint8List? _file;
 
   final TextEditingController _descController = TextEditingController();
+
+  bool _isLoading = false;
+
+  void postImage(String uid, String username, String profImage) async {
+    setState(() {
+      _isLoading = true;
+    });
+    try {
+      String res = await FireStoreMethods()
+          .uploadPost(_descController.text, _file!, uid, username, profImage);
+
+      if (res == "Success") {
+        setState(() {
+          _isLoading = false;
+        });
+        // ignore: use_build_context_synchronously
+        showSnackBar("Posted", context);
+        clearImage();
+      } else {
+        setState(() {
+          _isLoading = false;
+        });
+        // ignore: use_build_context_synchronously
+        showSnackBar(res, context);
+      }
+    } catch (e) {
+      showSnackBar(e.toString(), context);
+    }
+  }
 
   _selectImage(BuildContext parentContext) async {
     return showDialog(
@@ -60,6 +90,12 @@ class _AddPostScreenState extends State<AddPostScreen> {
     );
   }
 
+  void clearImage() {
+    setState(() {
+      _file = null;
+    });
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -89,7 +125,8 @@ class _AddPostScreenState extends State<AddPostScreen> {
               centerTitle: false,
               actions: [
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () =>
+                      postImage(user!.uid, user.username, user.photoUrl),
                   child: const Text(
                     "Post",
                     style: TextStyle(
@@ -103,6 +140,14 @@ class _AddPostScreenState extends State<AddPostScreen> {
             ),
             body: Column(
               children: [
+                _isLoading
+                    ? const LinearProgressIndicator(
+                        color: Colors.blueAccent,
+                      )
+                    : const Padding(
+                        padding: EdgeInsets.only(top: 0),
+                      ),
+                const Divider(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.start,
