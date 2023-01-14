@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/utilis/colors.dart';
-
-import 'package:velocity_x/velocity_x.dart';
+import 'package:instagram_clone/utilis/global_variables.dart';
 
 class MobileScreenLayout extends StatefulWidget {
   const MobileScreenLayout({super.key});
@@ -44,13 +43,7 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
         physics: const NeverScrollableScrollPhysics(),
         controller: pageController,
         onPageChanged: onPageChanged,
-        children: [
-          "home".text.xl.makeCentered(),
-          "search".text.xl.makeCentered(),
-          "add".text.xl.makeCentered(),
-          "fav".text.xl.makeCentered(),
-          "pro".text.xl.makeCentered(),
-        ],
+        children: homeScreenItems,
       ),
       bottomNavigationBar: CupertinoTabBar(
         backgroundColor: mobileBackgroundColor,
