@@ -7,7 +7,6 @@ import 'package:instagram_clone/resources/firebase_methods.dart';
 import 'package:instagram_clone/utilis/colors.dart';
 import 'package:instagram_clone/utilis/utilis.dart';
 import 'package:provider/provider.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 class AddPostScreen extends StatefulWidget {
   const AddPostScreen({super.key});
@@ -119,7 +118,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
               backgroundColor: mobileBackgroundColor,
               leading: IconButton(
                 icon: const Icon(Icons.arrow_back),
-                onPressed: () {},
+                onPressed: clearImage,
               ),
               title: const Text("Post to"),
               centerTitle: false,
