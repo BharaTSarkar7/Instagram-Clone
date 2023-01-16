@@ -6,7 +6,7 @@ import 'package:velocity_x/velocity_x.dart';
 const webScreenSize = 600;
 
 List<Widget> homeScreenItems = [
-  FeedScreen(),
+  const FeedScreen(),
   "search".text.xl.makeCentered(),
   const AddPostScreen(),
   "fav".text.xl.makeCentered(),

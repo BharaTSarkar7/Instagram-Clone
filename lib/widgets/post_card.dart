@@ -1,13 +1,12 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/utilis/colors.dart';
 import 'package:intl/intl.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 class PostCard extends StatelessWidget {
+  const PostCard({super.key, required this.snap});
+  // ignore: prefer_typing_uninitialized_variables
   final snap;
-  const PostCard({super.key, this.snap});
 
   @override
   Widget build(BuildContext context) {
