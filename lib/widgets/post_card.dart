@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instagram_clone/Screen/comments_screen.dart';
 import 'package:instagram_clone/models/user.dart';
 
 import 'package:instagram_clone/providers/user_provider.dart';
@@ -141,7 +142,11 @@ class _PostCardState extends State<PostCard> {
                 ),
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => CommentScreen(),
+                  ),
+                ),
                 icon: const Icon(Icons.message_outlined),
               ),
               IconButton(
