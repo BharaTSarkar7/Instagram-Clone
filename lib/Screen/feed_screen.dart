@@ -4,7 +4,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instagram_clone/utilis/colors.dart';
 import 'package:instagram_clone/widgets/post_card.dart';
 
-
 class FeedScreen extends StatelessWidget {
   const FeedScreen({super.key});
 
