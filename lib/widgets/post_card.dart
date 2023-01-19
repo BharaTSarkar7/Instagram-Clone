@@ -89,7 +89,9 @@ class _PostCardState extends State<PostCard> {
                   onPressed: () {
                     showDialog(
                       context: context,
-                      builder: (context) => const CustomDialog(),
+                      builder: (context) => CustomDialog(
+                        snap: widget.snap,
+                      ),
                     );
                   },
                   icon: const Icon(Icons.more_vert),
@@ -273,19 +275,28 @@ class _PostCardState extends State<PostCard> {
   }
 }
 
-class CustomDialog extends StatelessWidget {
-  const CustomDialog({super.key});
+class CustomDialog extends StatefulWidget {
+  final snap;
+  const CustomDialog({super.key, required this.snap});
 
+  @override
+  State<CustomDialog> createState() => _CustomDialogState();
+}
+
+class _CustomDialogState extends State<CustomDialog> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
       child: ListView(
         padding: const EdgeInsets.symmetric(vertical: 16),
         shrinkWrap: true,
-        children: ['Delete', 'Save']
+        children: ['Delete']
             .map(
               (e) => InkWell(
-                onTap: () {},
+                onTap: () async {
+                  FireStoreMethods().deletePost(widget.snap['postId']);
+                  Navigator.of(context).pop();
+                },
                 child: Container(
                   padding:
                       const EdgeInsets.symmetric(vertical: 12, horizontal: 16),

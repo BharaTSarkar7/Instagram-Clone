@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:instagram_clone/models/comment_model.dart';
 import 'package:instagram_clone/models/post.dart';
 import 'package:instagram_clone/resources/storage_methods.dart';
+import 'package:instagram_clone/utilis/utilis.dart';
 import 'package:uuid/uuid.dart';
 
 class FireStoreMethods {
@@ -79,6 +80,15 @@ class FireStoreMethods {
       }
     } catch (e) {
       print(e.toString());
+    }
+  }
+
+  // Deleting post
+  Future<void> deletePost(String postId) async {
+    try {
+      _firestore.collection('posts').doc(postId).delete();
+    } catch (err) {
+      print(err.toString());
     }
   }
 }
