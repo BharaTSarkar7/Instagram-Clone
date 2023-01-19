@@ -1,6 +1,10 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:instagram_clone/providers/user_provider.dart';
+import 'package:provider/provider.dart';
+
+import '../models/user.dart';
 
 class CommentCard extends StatefulWidget {
   const CommentCard({super.key});
@@ -12,13 +16,14 @@ class CommentCard extends StatefulWidget {
 class _CommentCardState extends State<CommentCard> {
   @override
   Widget build(BuildContext context) {
+    final User? user = Provider.of<UserProvider>(context).getUser;
+
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 16),
       child: Row(
         children: [
           CircleAvatar(
-            backgroundImage: NetworkImage(
-                'https://images.unsplash.com/photo-1668619834434-a9fb20654726?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MTd8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60'),
+            backgroundImage: NetworkImage(user!.photoUrl),
             radius: 18,
           ),
           Expanded(
