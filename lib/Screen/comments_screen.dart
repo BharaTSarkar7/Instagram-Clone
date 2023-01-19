@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/Screen/feed_screen.dart';
 import 'package:instagram_clone/resources/firebase_methods.dart';
@@ -72,6 +73,7 @@ class _CommentScreenState extends State<CommentScreen> {
                   padding: const EdgeInsets.only(left: 16, right: 8),
                   child: TextField(
                     controller: _commentController,
+                    // ignore: prefer_const_constructors
                     decoration: InputDecoration(
                       hintText: "Add a comment....",
                       border: InputBorder.none,
@@ -87,6 +89,9 @@ class _CommentScreenState extends State<CommentScreen> {
                       user.uid,
                       user.username,
                       user.photoUrl);
+                  setState(() {
+                    _commentController.text = "";
+                  });
                 },
                 child: Container(
                   padding:
@@ -102,7 +107,28 @@ class _CommentScreenState extends State<CommentScreen> {
             ],
           ),
         ),
-        body: CommentCard(),
+        body: StreamBuilder(
+          stream: FirebaseFirestore.instance
+              .collection('posts')
+              .doc(widget.snap['postId'])
+              .collection('comments')
+              .orderBy('datePublished', descending: true)
+              .snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+
+            return ListView.builder(
+              itemCount: (snapshot.data! as dynamic).docs.length,
+              itemBuilder: (context, index) => CommentCard(
+                snap: (snapshot.data! as dynamic).docs[index].data(),
+              ),
+            );
+          },
+        ),
       ),
     );
   }
