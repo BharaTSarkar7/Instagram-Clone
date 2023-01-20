@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:instagram_clone/Screen/add_post_screen.dart';
 import 'package:instagram_clone/Screen/feed_screen.dart';
+import 'package:instagram_clone/Screen/profile_screen.dart';
 import 'package:instagram_clone/Screen/search_screen.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -11,5 +12,5 @@ List<Widget> homeScreenItems = [
   const SearchScreen(),
   const AddPostScreen(),
   "fav".text.xl.makeCentered(),
-  "pro".text.xl.makeCentered(),
+  const ProfileScreen(),
 ];
